@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: newsapp
   name: newsapp
@@ -10,17 +9,21 @@ spec:
   selector:
     matchLabels:
       app: newsapp
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: newsapp
+        role: rolling-update
     spec:
       containers:
       - image: princejoseph1k94/newsapp:{{BUILD_NUMBER}}
         name: newsapp
+        resources: {}
         ports:
         - containerPort: 8090
-        resources: {}
-status: {}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8090
+  strategy:
+    type: RollingUpdate
