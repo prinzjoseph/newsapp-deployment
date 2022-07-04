@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: newsapp
+  name: newsapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: newsapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: newsapp
+    spec:
+      containers:
+      - image: princejoseph1k94/newsapp:{{BUILD_NUMBER}}
+        name: newsapp
+        ports:
+        - containerPort: 8090
+        resources: {}
+status: {}
