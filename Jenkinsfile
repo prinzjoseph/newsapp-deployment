@@ -27,10 +27,8 @@ pipeline {
             steps {
                 sh '''
                     cat deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" > newdeployment.yaml
-                    rsync -avz newdeployment.yaml prince@192.168.1.37:~
-                    rsync -avz service.yaml prince@192.168.1.37:~
-                    ssh prince@192.168.1.37 "kubectl apply -f newdeployment.yaml"
-                    ssh prince@192.168.1.37 "kubectl apply -f service.yaml"
+                    kubectl apply -f newdeployment.yaml
+                    kubectl apply -f service.yaml
                 '''
             }
         }
